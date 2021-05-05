@@ -7,6 +7,8 @@ from plotly import graph_objs as go
 from util import load_data
 from util import plot_raw_data
 from footer import footer
+import base64
+
 
 st.title('Stock Price Prediction')
 st.markdown('Use machine learning to guide your trading.'
@@ -25,13 +27,13 @@ footer {visibility: hidden;}
 #hide hamburger menu
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
-data_load_state = st.text('')
 data = []
+bad_input = st.text('')
 
 selected_stock = st.text_input(label = "Ticker Symbol", max_chars = 5, help = "Example: GOOGL, AAPL, FB")
 
 TODAY = date.today().strftime("%Y-%m-%d", )
-START = st.date_input("Start Date", value = date(2019, 1, 1), max_value = date.today(), help = "The date you wish the model to start training on")
+START = st.date_input("Start Date", value = date(2019, 1, 1), min_value = date(2000, 1, 1), max_value = date.today(), help = "The date you wish the model to start training on")
 
 #load data before button is even pushed
 try:
@@ -44,22 +46,35 @@ period = n_years * 365
 
 if st.button("Predict"):
 
-    if len(selected_stock) != 0:
-        data_load_state = st.text('Training model...')
-
     if len(data) == 0:
-        data_load_state.text('Please enter a valid ticker symbol to get started.')
+        bad_input = st.text('Please enter a valid ticker symbol to get started.')
     else:
+        bad_input.empty()
         
         # Predict forecast with Prophet.
         df_train = data[['Date','Close']]
         df_train = df_train.rename(columns={"Date": "ds", "Close": "y"})
 
-        data_load_state.text('The model is training. This will take a minute...')
         m = Prophet()
+
+        file_ = open("./assets/loading_animation.gif", "rb")
+        contents = file_.read()
+        data_url = base64.b64encode(contents).decode("utf-8")
+        file_.close()
+
+        #set loading animation
+        loading_text = st.text('The model is training. This will take a minute...')
+        loading = st.markdown(f'<img src="data:image/gif;base64,{data_url}" style="width:350px; margin:auto; display:block;">',unsafe_allow_html=True,)  
+
+
+        #train model
         m.fit(df_train)
         future = m.make_future_dataframe(periods=period)
         forecast = m.predict(future)
+
+        #end loading animation
+        loading_text.text('')
+        loading.empty()
 
         if n_years == 1:
             st.subheader(f'Predictions for the Next Year')
@@ -78,8 +93,6 @@ if st.button("Predict"):
         st.subheader("Forecast components")
         fig2 = m.plot_components(forecast)
         st.write(fig2)
-
-        data_load_state.text('')
 
         st.subheader('Raw Data on Recent Trading Days')
         st.write(data.tail())

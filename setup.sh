@@ -7,7 +7,7 @@ enableCORS = false\n\
 headless = true\n\
 [theme]\n\
 primaryColor = '#F63366'\n\
-backgroundColor = '#0E1117'\n\
+backgroundColor = '#000000'\n\
 secondaryBackgroundColor = '#31333F'\n\
 textColor = '#FAFAFA'\n\
 font = 'sans serif'\n\
