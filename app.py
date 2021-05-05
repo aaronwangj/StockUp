@@ -8,6 +8,12 @@ from util import load_data
 from util import plot_raw_data
 from footer import footer
 
+st.title('Stock Price Prediction')
+st.markdown('Use machine learning to guide your trading.'
+            + ' This application uses Facebook Research\'s Prophet model to predict equities pricing based on historical prices.'
+            + ' Read the Prophet paper [here](https://peerj.com/preprints/3190v2.pdf).')
+
+
 hide_streamlit_style = """
 <style>
 #MainMenu {visibility: hidden;}
@@ -16,23 +22,7 @@ footer {visibility: hidden;}
 
 """
 
-darkmode = """
-<style>
-body {
-  background-color: black;
-  color: white;
-}
-</style>
-"""
-
-# st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-# st.markdown(darkmode,unsafe_allow_html=True)
-
-
-st.title('Stock Price Prediction')
-st.markdown('Use machine learning to guide your trading.'
-            + ' This application uses Facebook Research\'s Prophet model to predict equities pricing based on historical prices.'
-            + ' Read the Prophet paper [here](https://peerj.com/preprints/3190v2.pdf).')
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 data_load_state = st.text('')
 data = []
