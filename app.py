@@ -22,6 +22,7 @@ footer {visibility: hidden;}
 
 """
 
+#hide hamburger menu
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 data_load_state = st.text('')
@@ -30,16 +31,21 @@ data = []
 selected_stock = st.text_input(label = "Ticker Symbol", max_chars = 5, help = "Example: GOOGL, AAPL, FB")
 
 TODAY = date.today().strftime("%Y-%m-%d", )
-START = st.date_input("Start Date", value = date(2015, 1, 1), max_value = date.today(), help = "The date you wish the model to start training on")
+START = st.date_input("Start Date", value = date(2019, 1, 1), max_value = date.today(), help = "The date you wish the model to start training on")
 
-n_years = st.slider('Years of prediction:', 1, 5, help = "How many years in the future you want to predict for")
+#load data before button is even pushed
+try:
+    data = load_data(selected_stock, START, TODAY)
+except:
+    pass
+
+n_years = st.slider('Years of Prediction (recommended 3 or less):', 1, 5, help = "How many years in the future you want to predict for")
 period = n_years * 365
 
 if st.button("Predict"):
 
     if len(selected_stock) != 0:
         data_load_state = st.text('Training model...')
-        data = load_data(selected_stock, START, TODAY)
 
     if len(data) == 0:
         data_load_state.text('Please enter a valid ticker symbol to get started.')
@@ -49,17 +55,16 @@ if st.button("Predict"):
         df_train = data[['Date','Close']]
         df_train = df_train.rename(columns={"Date": "ds", "Close": "y"})
 
-        data_load_state.text('The model is predicting...')
+        data_load_state.text('The model is training. This will take a minute...')
         m = Prophet()
         m.fit(df_train)
         future = m.make_future_dataframe(periods=period)
         forecast = m.predict(future)
-        data_load_state.text('The model is predicting... done!')
 
         if n_years == 1:
-            st.subheader(f'Forecast plot for {n_years} year')
+            st.subheader(f'Predictions for the Next Year')
         elif n_years >= 1:
-            st.subheader(f'Forecast plot for {n_years} years')
+            st.subheader(f'Predictions for the Next {n_years} years')
         fig1 = plot_plotly(m, forecast)
         st.plotly_chart(fig1, use_container_width = True)
 
@@ -76,7 +81,8 @@ if st.button("Predict"):
 
         data_load_state.text('')
 
-        st.subheader('Raw Data on on Recent Trading Days')
+        st.subheader('Raw Data on Recent Trading Days')
         st.write(data.tail())
 
+#footer
 footer()
