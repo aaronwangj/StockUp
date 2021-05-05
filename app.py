@@ -11,10 +11,10 @@ import base64
 
 st.set_page_config(page_title="Stock 🆙", page_icon="📈")
 
-st.title('Stock 🆙')
+st.title('Welcome to Stock 🆙')
 st.markdown('Use machine learning to guide your trading.'
             + ' Stock 🆙 uses Facebook Research\'s Prophet model to predict equities pricing based on historical prices.'
-            + ' Read the Prophet paper [here](https://peerj.com/preprints/3190v2.pdf).')
+            + ' Read the Prophet paper [here](https://peerj.com/preprints/3190v2.pdf). 📈')
 
 hide_streamlit_style = """
 <style>
@@ -27,7 +27,7 @@ footer {visibility: hidden;}
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 data = []
-st.markdown('Enter a ticker symbol and click \'Predict\' to get started.')
+st.markdown('Enter a ticker symbol and click \'Predict\' to get started. 🚀')
 
 selected_stock = st.text_input(label = "Ticker Symbol", value = 'AAPL',max_chars = 5, help = "Example: GOOGL, AAPL, FB")
 
@@ -88,7 +88,6 @@ if predict_button:
         # Show and plot forecast
         st.subheader('Regression Data on Recent Trading Days')
         st.write(forecast.tail())
-
 
         #Plot open/closes
         plot_raw_data(data)
