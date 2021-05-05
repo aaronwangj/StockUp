@@ -8,6 +8,17 @@ from util import load_data
 from util import plot_raw_data
 from footer import footer
 
+hide_streamlit_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
+
+
+
 st.title('Stock Price Prediction')
 st.markdown('Use machine learning to guide your trading.'
             + ' This application uses Facebook Research\'s Prophet model to predict equities pricing based on historical prices.'
