@@ -15,8 +15,18 @@ footer {visibility: hidden;}
 </style>
 
 """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
+darkmode = """
+<style>
+body {
+  background-color: black;
+  color: white;
+}
+</style>
+"""
+
+# st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+# st.markdown(darkmode,unsafe_allow_html=True)
 
 
 st.title('Stock Price Prediction')
