@@ -27,7 +27,7 @@ footer {visibility: hidden;}
 st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 data = []
-bad_input = st.text('')
+st.markdown('Enter a ticker symbol and click \'Predict\' to get started.')
 
 selected_stock = st.text_input(label = "Ticker Symbol", value = 'AAPL',max_chars = 5, help = "Example: GOOGL, AAPL, FB")
 
@@ -43,10 +43,14 @@ except:
 n_years = st.slider('Years of Prediction (recommended 3 or less):', 1, 5, help = "How many years in the future you want to predict for")
 period = n_years * 365
 
-if st.button("Predict"):
+predict_button = st.button("Predict")
+
+bad_input = st.markdown('')
+
+if predict_button:
 
     if len(data) == 0:
-        bad_input = st.text('Please enter a valid ticker symbol to get started.')
+        bad_input = st.text('Invalid ticker symbol. Please try again.')
     else:
         bad_input.empty()
         
