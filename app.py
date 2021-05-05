@@ -9,13 +9,12 @@ from util import plot_raw_data
 from footer import footer
 import base64
 
-st.set_page_config(page_title="Stock Price Prediction", page_icon="📈")
+st.set_page_config(page_title="Stock 🆙", page_icon="📈")
 
-st.title('Stock Price Prediction')
+st.title('Stock 🆙')
 st.markdown('Use machine learning to guide your trading.'
-            + ' This application uses Facebook Research\'s Prophet model to predict equities pricing based on historical prices.'
+            + ' Stock 🆙 uses Facebook Research\'s Prophet model to predict equities pricing based on historical prices.'
             + ' Read the Prophet paper [here](https://peerj.com/preprints/3190v2.pdf).')
-
 
 hide_streamlit_style = """
 <style>
@@ -31,7 +30,7 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 data = []
 bad_input = st.text('')
 
-selected_stock = st.text_input(label = "Ticker Symbol", max_chars = 5, help = "Example: GOOGL, AAPL, FB")
+selected_stock = st.text_input(label = "Ticker Symbol", value = 'AAPL',max_chars = 5, help = "Example: GOOGL, AAPL, FB")
 
 TODAY = date.today().strftime("%Y-%m-%d", )
 START = st.date_input("Start Date", value = date(2019, 1, 1), min_value = date(2000, 1, 1), max_value = date.today(), help = "The date you wish the model to start training on")
@@ -56,8 +55,6 @@ if st.button("Predict"):
         df_train = data[['Date','Close']]
         df_train = df_train.rename(columns={"Date": "ds", "Close": "y"})
 
-        m = Prophet()
-
         file_ = open("./assets/loading_animation.gif", "rb")
         contents = file_.read()
         data_url = base64.b64encode(contents).decode("utf-8")
@@ -67,6 +64,7 @@ if st.button("Predict"):
         loading_text = st.text('The model is training. This will take a minute...')
         loading = st.markdown(f'<img src="data:image/gif;base64,{data_url}" style="width:350px; margin:auto; display:block;">',unsafe_allow_html=True,)  
 
+        m = Prophet()
 
         #train model
         m.fit(df_train)
@@ -84,14 +82,15 @@ if st.button("Predict"):
         fig1 = plot_plotly(m, forecast)
         st.plotly_chart(fig1, use_container_width = True)
 
-        #Plot open/closes
-        plot_raw_data(data)
-        
         # Show and plot forecast
         st.subheader('Regression Data on Recent Trading Days')
         st.write(forecast.tail())
 
-        st.subheader("Forecast components")
+
+        #Plot open/closes
+        plot_raw_data(data)
+
+        st.subheader("Forecast Components")
         fig2 = m.plot_components(forecast)
         st.write(fig2)
 
