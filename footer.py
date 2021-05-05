@@ -64,7 +64,7 @@ def layout(*args):
 def footer():
     myargs = [
         "Made with ❤️ by ",
-        link("https://aaronjwang.com", "Aaron Wang")
+        link("https://aaronjwang.com", "Aaron Wang"), ". Source code is ", link("https://github.com/aaronwangj/StockUp", "here"), "."
     ]
     
     layout(*myargs)

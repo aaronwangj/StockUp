@@ -21,7 +21,6 @@ hide_streamlit_style = """
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 </style>
-
 """
 
 #hide hamburger menu
@@ -33,7 +32,7 @@ bad_input = st.text('')
 selected_stock = st.text_input(label = "Ticker Symbol", value = 'AAPL',max_chars = 5, help = "Example: GOOGL, AAPL, FB")
 
 TODAY = date.today().strftime("%Y-%m-%d", )
-START = st.date_input("Start Date", value = date(2019, 1, 1), min_value = date(2000, 1, 1), max_value = date.today(), help = "The date you wish the model to start training on")
+START = st.date_input("Start Date", value = date(2018, 1, 1), min_value = date(2000, 1, 1), max_value = date.today(), help = "The date you wish the model to start training on")
 
 #load data before button is even pushed
 try:
