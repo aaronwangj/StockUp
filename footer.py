@@ -63,10 +63,7 @@ def layout(*args):
 
 def footer():
     myargs = [
-        "Made in ",
-        image('https://ia802802.us.archive.org/28/items/github.com-streamlit-streamlit_-_2020-01-25_03-34-41/cover.jpg',
-              width=px(25), height=px(25)),
-        " with ❤️ by ",
+        "Made with ❤️ by ",
         link("https://aaronjwang.com", "Aaron Wang")
     ]
     

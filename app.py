@@ -9,6 +9,7 @@ from util import plot_raw_data
 from footer import footer
 import base64
 
+st.set_page_config(page_title="Stock Price Prediction", page_icon="📈")
 
 st.title('Stock Price Prediction')
 st.markdown('Use machine learning to guide your trading.'

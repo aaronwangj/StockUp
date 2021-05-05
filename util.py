@@ -10,7 +10,7 @@ def plot_raw_data(data):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=data['Date'], y=data['Open'], name="stock_open"))
     fig.add_trace(go.Scatter(x=data['Date'], y=data['Close'], name="stock_close"))
-    fig.layout.update(title_text='Time Series data with Rangeslider', xaxis_rangeslider_visible=True)
+    fig.layout.update(title_text='Time Series Data with Rangeslider', xaxis_rangeslider_visible=True)
     st.plotly_chart(fig)
 
 @st.cache(show_spinner=False)
