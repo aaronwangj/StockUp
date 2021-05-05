@@ -42,6 +42,9 @@ streamlit run app.py
 <img src="/assets/raw-data.png?raw=true" align="middle" />  </p>
 
 
+## Deployment
+The application is deployed through Streamlit Sharing and can be found [here] (https://share.streamlit.io/aaronwangj/stockup/app.py).
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
