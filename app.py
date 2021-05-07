@@ -13,7 +13,7 @@ st.set_page_config(page_title="Stock 🆙", page_icon="📈")
 
 st.title('Welcome to Stock 🆙')
 st.markdown('Use machine learning to guide your trading.'
-            + ' Stock 🆙 uses Facebook Research\'s Prophet model to predict equities pricing based on historical prices.'
+            + ' Stock 🆙 uses Facebook Research\'s Prophet model to predict equity prices based on historical pricing trends.'
             + ' Read the Prophet paper [here](https://peerj.com/preprints/3190v2.pdf). 📈')
 
 hide_streamlit_style = """
@@ -32,7 +32,7 @@ st.markdown('Enter a ticker symbol and click \'Predict\' to get started. 🚀')
 selected_stock = st.text_input(label = "Ticker Symbol", value = 'AAPL',max_chars = 5, help = "Example: GOOGL, AAPL, FB")
 
 TODAY = date.today().strftime("%Y-%m-%d", )
-START = st.date_input("Start Date", value = date(2018, 1, 1), min_value = date(2000, 1, 1), max_value = date.today(), help = "The date you wish the model to start training on")
+START = st.date_input("Start Date", value = date(2018, 1, 1), min_value = date(2000, 1, 1), max_value = date.today(), help = "The date the model starts training on")
 
 #load data before button is even pushed
 try:
@@ -40,7 +40,7 @@ try:
 except:
     pass
 
-n_years = st.slider('Years of Prediction (recommended 3 or less):', 1, 5, help = "How many years in the future you want to predict for")
+n_years = st.slider('Years of Prediction:', 1, 5, help = "How many years in the future you want to predict for")
 period = n_years * 365
 
 predict_button = st.button("Predict")
@@ -64,7 +64,7 @@ if predict_button:
         file_.close()
 
         #set loading animation
-        loading_text = st.text('The model is training. This will take a minute...')
+        loading_text = st.text('The model is training...')
         loading = st.markdown(f'<img src="data:image/gif;base64,{data_url}" style="width:350px; margin:auto; display:block;">',unsafe_allow_html=True,)  
 
         m = Prophet()
