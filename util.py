@@ -15,7 +15,7 @@ def plot_raw_data(data):
 
 @st.cache(show_spinner=False)
 def load_data(ticker, START, TODAY):
-    data = yf.download(ticker, START, TODAY)
+    data = yf.download(ticker, START, TODAY, threads=False)
     data.reset_index(inplace=True)
     return data
     
